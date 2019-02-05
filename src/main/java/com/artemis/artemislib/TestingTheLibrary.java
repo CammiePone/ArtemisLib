@@ -2,6 +2,7 @@ package com.artemis.artemislib;
 
 import com.artemis.artemislib.util.EntityResizing;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -11,12 +12,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
-public class BeepBoop
+public class TestingTheLibrary
 {
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingUpdateEvent event)
 	{
-		EntityResizing.resizeEntityLiving(event.getEntityLiving(), 0.5F, 0.5F);
+		EntityResizing.resizeEntityLiving(event.getEntityLiving(), 5.0F, 5.0F);
 	}
 	
 	@SubscribeEvent
@@ -29,7 +30,14 @@ public class BeepBoop
 	@SubscribeEvent
 	public static void onLivingRenderPre(RenderLivingEvent.Pre event)
 	{
-		EntityResizing.renderEntityPre(event, event.getEntity(), 0.5F);
+		if(event.getEntity() instanceof EntityPlayer)
+		{
+			EntityResizing.renderEntityPre(event, (EntityPlayer) event.getEntity(), 0.5F);
+		}
+		else
+		{
+			EntityResizing.renderEntityPre(event, event.getEntity(), 5.0F);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

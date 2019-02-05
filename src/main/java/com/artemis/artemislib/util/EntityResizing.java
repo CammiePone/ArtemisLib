@@ -21,6 +21,7 @@ public class EntityResizing
 	public static void resizeEntityPlayer(EntityPlayer player, float height, float width, float eyeHeight)
 	{
 		ResizePacketHandler.INSTANCE.sendToAllTracking(new PacketAlteredSize(player, height, width, false), player);
+		
 		player.eyeHeight = eyeHeight;
 	}
 	
@@ -42,6 +43,7 @@ public class EntityResizing
 	public static void resetEntitySize(EntityLivingBase entity)
 	{
 		ResizePacketHandler.INSTANCE.sendToAllTracking(new PacketNormalSize(entity), entity);
+		
 		if(entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) entity;
