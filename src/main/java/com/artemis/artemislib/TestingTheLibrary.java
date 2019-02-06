@@ -18,7 +18,7 @@ public class TestingTheLibrary
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
-		EntityResizing.resizeEntityPlayer(event.player, 0.5F, 0.5F, 0.80F);
+		EntityResizing.resizeEntityPlayer(event.player, 0.5F, 0.5F, 0.90F);
 	}
 	
 	@SubscribeEvent
