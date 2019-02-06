@@ -34,7 +34,7 @@ public class SendPackets
 				{
 					if(!client)
 					{
-						NetworkHandler.INSTANCE.sendTo(new CapDataMessage(cap.getSize(), cap.getTrans(), cap.getTarget(), cap.getWidth(), cap.getHeight(), cap.getDefaultWidth(), cap.getDefaultHeight(), entity.getEyeHeight(), entity.getEntityId()), (EntityPlayerMP)player);
+						NetworkHandler.INSTANCE.sendTo(new CapDataMessage(cap.getSize(), cap.getTrans(), cap.getWidth(), cap.getHeight(), cap.getDefaultWidth(), cap.getDefaultHeight(), entity.getEyeHeight(), entity.getEntityId()), (EntityPlayerMP)player);
 					}
 				}
 			}
@@ -56,7 +56,6 @@ public class SendPackets
 					if((newCap != null) && (oldCap != null))
 					{
 						newCap.setTrans(oldCap.getTrans());
-						newCap.setTarget(oldCap.getTarget());
 						newCap.setSize(oldCap.getSize());
 						newCap.setWidth(oldCap.getWidth());
 						newCap.setHeight(oldCap.getHeight());

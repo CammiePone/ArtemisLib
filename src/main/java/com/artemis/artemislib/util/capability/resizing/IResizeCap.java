@@ -12,10 +12,6 @@ public interface IResizeCap
 
 	void setSize(int size);
 
-	int getTarget();
-
-	void setTarget(int target);
-
 	float getWidth();
 
 	void setWidth(float width);

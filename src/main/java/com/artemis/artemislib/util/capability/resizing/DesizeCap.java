@@ -62,23 +62,6 @@ public class DesizeCap implements IResizeCap
 	}
 	
 	@Override
-	public int getTarget()
-	{
-		return target;
-	}
-	
-	@Override
-	public void setTarget(int target)
-	{
-		target = MathHelper.clamp(target, 20, 200);
-		
-		if (this.target != target)
-		{
-			this.target = target;
-		}
-	}
-	
-	@Override
 	public float getWidth()
 	{
 		return width;

@@ -129,13 +129,13 @@ public class ResizingHandler
 		{
 			if (entity.isSneaking())
 			{
-				width = (cap.getDefaultWidth()*cap.getTarget())/100;
-				height = ((cap.getDefaultHeight()*cap.getTarget())/100)*0.92F;
+				width = (cap.getDefaultWidth()*cap.getWidth());
+				height = ((cap.getDefaultHeight()*cap.getHeight()))*0.92F;
 			}
 			else
 			{
-				width = (cap.getDefaultWidth()*cap.getTarget())/100;
-				height = ((cap.getDefaultHeight()*cap.getTarget())/100)*1.0F;
+				width = (cap.getDefaultWidth()*cap.getWidth());
+				height = ((cap.getDefaultHeight()*cap.getHeight()))*1.0F;
 			}
 			
 			width = MathHelper.clamp(width, 0.2F, 1.2F);

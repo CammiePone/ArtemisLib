@@ -21,7 +21,6 @@ public class CapDataMessage implements IMessage
 	
 	public int size = 100;
 	public boolean trans = false;
-	public int target = 100;
 	public float width = 0.6F;
 	public float height = 1.8F;
 	public float defaultWidth = 0.6F;
@@ -29,11 +28,10 @@ public class CapDataMessage implements IMessage
 	public float eyeHeight = 1.62F;
 	public static int entityID = 0;
 	
-	public CapDataMessage(int size, boolean trans, int target, float width, float height, float defaultWidth, float defaultHeight, float eyeHeight, int entityID)
+	public CapDataMessage(int size, boolean trans, float width, float height, float defaultWidth, float defaultHeight, float eyeHeight, int entityID)
 	{
 		this.size = size;
 		this.trans = trans;
-		this.target = target;
 		this.width = width;
 		this.height = height;
 		this.defaultWidth = defaultWidth;
@@ -47,7 +45,6 @@ public class CapDataMessage implements IMessage
 		// Writes the int into the buf
 		buf.writeInt(size);
 		buf.writeBoolean(trans);
-		buf.writeInt(target);
 		buf.writeFloat(width);
 		buf.writeFloat(height);
 		buf.writeFloat(defaultWidth);
@@ -60,7 +57,6 @@ public class CapDataMessage implements IMessage
 	{
 		this.size = buf.readInt();
 		this.trans = buf.readBoolean();
-		this.target = buf.readInt();
 		this.width = buf.readFloat();
 		this.height = buf.readFloat();
 		this.defaultWidth = buf.readFloat();
@@ -82,7 +78,6 @@ public class CapDataMessage implements IMessage
 					
 					cap.setSize(message.size);
 					cap.setTrans(message.trans);
-					cap.setTarget(message.target);
 					cap.setWidth(message.width);
 					cap.setHeight(message.height);
 					cap.setDefaultWidth(message.defaultWidth);

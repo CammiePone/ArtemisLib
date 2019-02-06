@@ -16,7 +16,8 @@ public class ResizeCapStorage implements IStorage<IResizeCap>
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setInteger("size", instance.getSize());
 		tag.setBoolean("transformed", instance.getTrans());
-		tag.setInteger("target", instance.getTarget());
+		tag.setFloat("height", instance.getHeight());
+		tag.setFloat("width", instance.getWidth());
 		return tag;
 	}
 
@@ -37,9 +38,14 @@ public class ResizeCapStorage implements IStorage<IResizeCap>
 				instance.setTrans(tag.getBoolean("transformed"));
 			}
 			
-			if(tag.hasKey("target"))
+			if(tag.hasKey("height"))
 			{
-				instance.setTarget(tag.getInteger("target"));
+				instance.setHeight(tag.getFloat("height"));
+			}
+			
+			if(tag.hasKey("width"))
+			{
+				instance.setWidth(tag.getFloat("width"));
 			}
 		}
 	}
