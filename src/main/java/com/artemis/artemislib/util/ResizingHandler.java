@@ -2,7 +2,7 @@ package com.artemis.artemislib.util;
 
 import java.lang.reflect.Method;
 
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,7 +14,7 @@ public class ResizingHandler
 {
 	protected static final Method setSize = ObfuscationReflectionHelper.findMethod(Entity.class, "func_70105_a", void.class, float.class, float.class);
 	
-	public static void setSize(EntityLivingBase entity, ICap cap)
+	public static void setSize(EntityLivingBase entity, IResizeCap cap)
 	{
 		float height = entity.height;
 		float width = entity.width;
@@ -83,7 +83,7 @@ public class ResizingHandler
 				entity.posX + d0, bb.minY+ (double)height, entity.posZ + d0));
 	}
 	
-	public static void mobSize(EntityLivingBase entity, ICap cap)
+	public static void mobSize(EntityLivingBase entity, IResizeCap cap)
 	{
 		float width = entity.width;
 		float height = entity.height;

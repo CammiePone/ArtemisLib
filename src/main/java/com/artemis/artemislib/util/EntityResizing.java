@@ -2,8 +2,8 @@ package com.artemis.artemislib.util;
 
 import java.lang.reflect.Method;
 
-import com.artemis.artemislib.util.capability.CapPro;
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.ResizeCap;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -25,9 +25,9 @@ public class EntityResizing
 	 */
 	public static void resizeEntityPlayer(EntityPlayer player, float height, float width, float eyeHeight)
 	{
-		if(player.hasCapability(CapPro.sizeCapability, null))
+		if(player.hasCapability(ResizeCap.sizeCapability, null))
 		{
-			ICap capability = player.getCapability(CapPro.sizeCapability, null);
+			IResizeCap capability = player.getCapability(ResizeCap.sizeCapability, null);
 			
 			capability.setHeight(height);
 			capability.setWidth(width);
@@ -50,9 +50,9 @@ public class EntityResizing
 	{
 		if(!(entity instanceof EntityPlayer))
 		{
-			if(entity.hasCapability(CapPro.sizeCapability, null))
+			if(entity.hasCapability(ResizeCap.sizeCapability, null))
 			{
-				ICap capability = entity.getCapability(CapPro.sizeCapability, null);
+				IResizeCap capability = entity.getCapability(ResizeCap.sizeCapability, null);
 				
 				capability.setHeight(height);
 				capability.setWidth(width);

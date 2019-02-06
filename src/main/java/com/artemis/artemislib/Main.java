@@ -1,9 +1,9 @@
 package com.artemis.artemislib;
 
 import com.artemis.artemislib.proxy.CommonProxy;
-import com.artemis.artemislib.util.capability.CapStorage;
-import com.artemis.artemislib.util.capability.CapabilityFactory;
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.ResizeCapStorage;
+import com.artemis.artemislib.util.capability.resizing.ResizeCapFactory;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +33,7 @@ public class Main
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		CapabilityManager.INSTANCE.register(ICap.class, new CapStorage(), new CapabilityFactory());
+		CapabilityManager.INSTANCE.register(IResizeCap.class, new ResizeCapStorage(), new ResizeCapFactory());
 	}
 	
 	@EventHandler

@@ -2,8 +2,8 @@ package com.artemis.artemislib.util;
 
 import com.artemis.artemislib.network.NetworkHandler;
 import com.artemis.artemislib.network.packets.CapDataMessage;
-import com.artemis.artemislib.util.capability.CapPro;
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.ResizeCap;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,10 +25,10 @@ public class SendPackets
 			EntityPlayer player = event.getEntityPlayer();
 			boolean client = player.world.isRemote;
 			
-			if((event.getTarget() != null) && (event.getTarget() instanceof EntityLivingBase) && event.getTarget().hasCapability(CapPro.sizeCapability, null))
+			if((event.getTarget() != null) && (event.getTarget() instanceof EntityLivingBase) && event.getTarget().hasCapability(ResizeCap.sizeCapability, null))
 			{
 				EntityLivingBase entity = (EntityLivingBase) event.getTarget();
-				ICap cap = entity.getCapability(CapPro.sizeCapability, null);
+				IResizeCap cap = entity.getCapability(ResizeCap.sizeCapability, null);
 				
 				if(entity instanceof EntityPlayer)
 				{
@@ -44,10 +44,10 @@ public class SendPackets
 	@SubscribeEvent
 	public void playerClone(PlayerEvent.Clone event)
 	{
-		if(event.getEntityPlayer().hasCapability(CapPro.sizeCapability, null))
+		if(event.getEntityPlayer().hasCapability(ResizeCap.sizeCapability, null))
 		{
-			final ICap oldCap = event.getOriginal().getCapability(CapPro.sizeCapability, null);
-			final ICap newCap = event.getEntityPlayer().getCapability(CapPro.sizeCapability, null);
+			final IResizeCap oldCap = event.getOriginal().getCapability(ResizeCap.sizeCapability, null);
+			final IResizeCap newCap = event.getEntityPlayer().getCapability(ResizeCap.sizeCapability, null);
 			
 			if(event.isWasDeath())
 			{

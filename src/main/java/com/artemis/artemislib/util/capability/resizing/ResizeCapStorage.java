@@ -1,4 +1,4 @@
-package com.artemis.artemislib.util.capability;
+package com.artemis.artemislib.util.capability.resizing;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -6,12 +6,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
-public class CapStorage implements IStorage<ICap>
+public class ResizeCapStorage implements IStorage<IResizeCap>
 {
-	public static final CapStorage storage = new CapStorage();
+	public static final ResizeCapStorage storage = new ResizeCapStorage();
 
 	@Override
-	public NBTBase writeNBT(Capability<ICap> capability, ICap instance, EnumFacing side)
+	public NBTBase writeNBT(Capability<IResizeCap> capability, IResizeCap instance, EnumFacing side)
 	{
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setInteger("size", instance.getSize());
@@ -21,7 +21,7 @@ public class CapStorage implements IStorage<ICap>
 	}
 
 	@Override
-	public void readNBT(Capability<ICap> capability, ICap instance, EnumFacing side, NBTBase nbt)
+	public void readNBT(Capability<IResizeCap> capability, IResizeCap instance, EnumFacing side, NBTBase nbt)
 	{
 		if (nbt instanceof NBTTagCompound)
 		{

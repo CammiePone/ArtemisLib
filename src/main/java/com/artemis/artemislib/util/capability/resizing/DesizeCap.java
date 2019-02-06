@@ -1,9 +1,9 @@
-package com.artemis.artemislib.util.capability;
+package com.artemis.artemislib.util.capability.resizing;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 
-public class DeCap implements ICap
+public class DesizeCap implements IResizeCap
 {
 	int size = 100;
 	boolean transformed = false;
@@ -13,12 +13,12 @@ public class DeCap implements ICap
 	float defaultWidth;
 	float defaultHeight;
 	
-	public DeCap()
+	public DesizeCap()
 	{
 		
 	}
 	
-	public DeCap(int size, boolean transformed, int target, float width, float height, float defaultWidth, float defaultHeight)
+	public DesizeCap(int size, boolean transformed, int target, float width, float height, float defaultWidth, float defaultHeight)
 	{
 		this.size = size;
 		this.transformed = transformed;
@@ -145,12 +145,12 @@ public class DeCap implements ICap
 	@Override
 	public NBTTagCompound saveNBT()
 	{
-		return (NBTTagCompound) CapStorage.storage.writeNBT(CapPro.sizeCapability, this, null);
+		return (NBTTagCompound) ResizeCapStorage.storage.writeNBT(ResizeCap.sizeCapability, this, null);
 	}
 	
 	@Override
 	public void loadNBT(NBTTagCompound compound)
 	{
-		CapStorage.storage.readNBT(CapPro.sizeCapability, this, null, compound);
+		ResizeCapStorage.storage.readNBT(ResizeCap.sizeCapability, this, null, compound);
 	}	
 }

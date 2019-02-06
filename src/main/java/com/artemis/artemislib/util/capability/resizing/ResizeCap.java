@@ -1,4 +1,4 @@
-package com.artemis.artemislib.util.capability;
+package com.artemis.artemislib.util.capability.resizing;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -6,22 +6,22 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class CapPro implements ICapabilitySerializable<NBTTagCompound>
+public class ResizeCap implements ICapabilitySerializable<NBTTagCompound>
 {
-	private ICap capabilitySize = null;
+	private IResizeCap capabilitySize = null;
 	
-	public CapPro()
+	public ResizeCap()
 	{
-		this.capabilitySize = new DeCap();
+		this.capabilitySize = new DesizeCap();
 	}
 	
-	public CapPro(ICap capability)
+	public ResizeCap(IResizeCap capability)
 	{
 		this.capabilitySize = capability;
 	}
 	
-	@CapabilityInject(ICap.class)
-	public static final Capability<ICap> sizeCapability = null;
+	@CapabilityInject(IResizeCap.class)
+	public static final Capability<IResizeCap> sizeCapability = null;
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)

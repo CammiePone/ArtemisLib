@@ -1,8 +1,8 @@
-package com.artemis.artemislib.util.capability;
+package com.artemis.artemislib.util.capability.resizing;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface ICap
+public interface IResizeCap
 {
 	boolean getTrans();
 

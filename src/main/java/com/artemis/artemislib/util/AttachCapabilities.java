@@ -1,9 +1,9 @@
 package com.artemis.artemislib.util;
 
 import com.artemis.artemislib.Reference;
-import com.artemis.artemislib.util.capability.CapPro;
-import com.artemis.artemislib.util.capability.DeCap;
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.ResizeCap;
+import com.artemis.artemislib.util.capability.resizing.DesizeCap;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +18,7 @@ public class AttachCapabilities
 	@SubscribeEvent
 	public static void onAddCapabilites(AttachCapabilitiesEvent<Entity> event)
 	{
-		if((event.getObject() != null) && event.getObject().isNonBoss() && !event.getObject().hasCapability(CapPro.sizeCapability, null)) 
+		if((event.getObject() != null) && event.getObject().isNonBoss() && !event.getObject().hasCapability(ResizeCap.sizeCapability, null)) 
 		{
 			if(event.getObject() instanceof EntityPlayer) 
 			{
@@ -30,9 +30,9 @@ public class AttachCapabilities
 				float height = player.height;
 				float defaultWidth = player.width;
 				float defaultHeight = player.height;
-				ICap cap = new DeCap(size, transformed, target, width, height, defaultWidth, defaultHeight);
+				IResizeCap cap = new DesizeCap(size, transformed, target, width, height, defaultWidth, defaultHeight);
 				
-				event.addCapability(new ResourceLocation(Reference.MODID, "Capability"), new CapPro(cap));
+				event.addCapability(new ResourceLocation(Reference.MODID, "Capability"), new ResizeCap(cap));
 			}
 			else
 			{
@@ -44,9 +44,9 @@ public class AttachCapabilities
 				float height = entity.height;
 				float defaultWidth = entity.width;
 				float defaultHeight = entity.height;
-				ICap cap = new DeCap(size, transformed, target, width, height, defaultWidth, defaultHeight);
+				IResizeCap cap = new DesizeCap(size, transformed, target, width, height, defaultWidth, defaultHeight);
 				
-				event.addCapability(new ResourceLocation(Reference.MODID, "Capability"), new CapPro(cap));
+				event.addCapability(new ResourceLocation(Reference.MODID, "Capability"), new ResizeCap(cap));
 			}
 		}
 	}

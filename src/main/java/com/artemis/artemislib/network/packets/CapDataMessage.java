@@ -1,8 +1,8 @@
 package com.artemis.artemislib.network.packets;
 
 import com.artemis.artemislib.Main;
-import com.artemis.artemislib.util.capability.CapPro;
-import com.artemis.artemislib.util.capability.ICap;
+import com.artemis.artemislib.util.capability.resizing.ResizeCap;
+import com.artemis.artemislib.util.capability.resizing.IResizeCap;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
@@ -78,7 +78,7 @@ public class CapDataMessage implements IMessage
 				if(Main.proxy.getEntityLivingBase(ctx, entityID) != null)
 				{
 					EntityLivingBase entity = Main.proxy.getEntityLivingBase(ctx, entityID);
-					ICap cap = entity.getCapability(CapPro.sizeCapability, null);
+					IResizeCap cap = entity.getCapability(ResizeCap.sizeCapability, null);
 					
 					cap.setSize(message.size);
 					cap.setTrans(message.trans);
