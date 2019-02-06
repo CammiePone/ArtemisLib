@@ -4,6 +4,7 @@ import com.artemis.artemislib.util.EntityResizing;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,15 +16,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TestingTheLibrary
 {
 	@SubscribeEvent
-	public static void onLivingUpdate(LivingUpdateEvent event)
+	public static void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
-		EntityResizing.resizeEntityLiving(event.getEntityLiving(), 5.0F, 5.0F);
+		EntityResizing.resizeEntityPlayer(event.player, 0.5F, 0.5F, 0.80F);
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerUpdate(TickEvent.PlayerTickEvent event)
+	public static void onLivingTick(LivingUpdateEvent event)
 	{
-		EntityResizing.resizeEntityPlayer(event.player, 0.5F, 0.5F, 0.35F);
+		EntityResizing.resizeEntityLiving(event.getEntityLiving(), 2.0F, 2.0F);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -36,7 +37,7 @@ public class TestingTheLibrary
 		}
 		else
 		{
-			EntityResizing.renderEntityPre(event, event.getEntity(), 5.0F);
+			EntityResizing.renderEntityPre(event, event.getEntity(), 2.0F);
 		}
 	}
 	
@@ -44,6 +45,13 @@ public class TestingTheLibrary
 	@SubscribeEvent
 	public static void onLivingRenderPost(RenderLivingEvent.Post event)
 	{
-		EntityResizing.renderEntityPost();
+		if(event.getEntity() instanceof EntityPlayer)
+		{
+			EntityResizing.renderEntityPost();
+		}
+		else
+		{
+			EntityResizing.renderEntityPost();
+		}
 	}
 }
