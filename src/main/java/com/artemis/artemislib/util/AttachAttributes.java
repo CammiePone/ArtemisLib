@@ -10,6 +10,7 @@ import com.google.common.collect.Multimap;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
@@ -19,7 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -45,19 +46,19 @@ public class AttachAttributes
 	}
 	
 	@SubscribeEvent
-	public static void onEntityTick(LivingUpdateEvent event)
+	public static void onEntityTick(LivingEvent.LivingUpdateEvent event)
 	{
 		EntityLivingBase entity = event.getEntityLiving();
 		double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
 		double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-		AxisAlignedBB aabb = entity.getEntityBoundingBox();
 		float height = (float) (entity.height * heightAttribute);
 		float width = (float) (entity.width * widthAttribute);
+		AxisAlignedBB aabb = entity.getEntityBoundingBox();
 		double d0 = width / 2.0D;
 		
-		if(entity instanceof EntityPlayer)
+		if(event.getEntityLiving() instanceof EntityPlayer)
 		{
-			EntityPlayer player = (EntityPlayer) entity;
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
 			player.eyeHeight = eyeHeight;
 		}
@@ -80,7 +81,7 @@ public class AttachAttributes
 		}
         
 		entity.setEntityBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0, 
-        		entity.posX + d0, aabb.minY + height, entity.posZ + d0));
+				entity.posX + d0, aabb.minY + height, entity.posZ + d0));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -113,11 +114,14 @@ public class AttachAttributes
 		
 		if(!entity.world.isRemote)
 		{
-			Multimap<String, AttributeModifier> attributes = HashMultimap.create();
-			
-			attributes.put(ArtemisLibAttributes.ENTITY_HEIGHT.getName(), new AttributeModifier(height, "Height", 1.0, 2));
-			attributes.put(ArtemisLibAttributes.ENTITY_WIDTH.getName(), new AttributeModifier(width, "Width", 1.0, 2));
-			entity.getAttributeMap().applyAttributeModifiers(attributes);
+			if(event.getSource().isMagicDamage())
+			{
+				Multimap<String, AttributeModifier> attributes = HashMultimap.create();
+				
+				attributes.put(ArtemisLibAttributes.ENTITY_HEIGHT.getName(), new AttributeModifier(height, "Height", 1.0, 2));
+				attributes.put(ArtemisLibAttributes.ENTITY_WIDTH.getName(), new AttributeModifier(width, "Width", 1.0, 2));
+				entity.getAttributeMap().applyAttributeModifiers(attributes);
+			}
 		}
 	}
 }
