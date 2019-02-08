@@ -5,18 +5,19 @@ import com.artemis.artemislib.Reference;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-public class NetworkHandler {
-
+public class NetworkHandler
+{
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID.toLowerCase());
-
+	
 	private static int ID = 0;
-
-	private static int nextId() {
+	
+	private static int nextId()
+	{
 		return ID++;
 	}
-
-	public static void init() {
-
+	
+	public static void init()
+	{
+		
 	}
-
 }

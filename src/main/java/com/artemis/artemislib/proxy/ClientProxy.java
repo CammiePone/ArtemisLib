@@ -15,24 +15,24 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ClientProxy extends CommonProxy
 {
-
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		super.preInit(event);
 	}
-
+	
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event)
+	{
 		super.init(event);
 	}
-
-
+	
 	@Override
 	public void registerItemRenderer(Item item, int meta, String id)
 	{
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
 	}
-
+	
 	@Override
 	@Nullable
 	public EntityLivingBase getEntityLivingBase(MessageContext context, int entityID)

@@ -12,11 +12,13 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 //@EventBusSubscriber
-public class CapabilitiesHandler {
-
+public class CapabilitiesHandler
+{
 	@SubscribeEvent
-	public void onAddCapabilites(AttachCapabilitiesEvent<Entity> event) {
-		if(event.getObject() instanceof EntityLivingBase  && !event.getObject().hasCapability(SizeCapPro.sizeCapability, null)) {
+	public void onAddCapabilites(AttachCapabilitiesEvent<Entity> event)
+	{
+		if(event.getObject() instanceof EntityLivingBase  && !event.getObject().hasCapability(SizeCapPro.sizeCapability, null))
+		{
 			final EntityLivingBase entity = (EntityLivingBase) event.getObject();
 			final boolean transformed = false;
 			final float defaultWidth = entity.width;
