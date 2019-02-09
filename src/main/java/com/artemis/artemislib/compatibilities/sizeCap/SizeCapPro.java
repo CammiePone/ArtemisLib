@@ -10,11 +10,13 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>{
 
 	private ISizeCap capabilitySize = null;
 
-	public SizeCapPro() {
+	public SizeCapPro()
+	{
 		this.capabilitySize = new SizeDefaultCap();
 	}
 
-	public SizeCapPro(ISizeCap capability) {
+	public SizeCapPro(ISizeCap capability)
+	{
 		this.capabilitySize = capability;
 	}
 
@@ -22,25 +24,30 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>{
 	public static final Capability<ISizeCap> sizeCapability = null;
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+	{
 		return capability == sizeCapability;
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (sizeCapability != null && capability == sizeCapability) {
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+	{
+		if (sizeCapability != null && capability == sizeCapability)
+		{
 			return (T) this.capabilitySize;
 		}
 		return null;
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
+	public NBTTagCompound serializeNBT()
+	{
 		return this.capabilitySize.saveNBT();
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
+	public void deserializeNBT(NBTTagCompound nbt)
+	{
 		this.capabilitySize.loadNBT(nbt);
 	}
 }

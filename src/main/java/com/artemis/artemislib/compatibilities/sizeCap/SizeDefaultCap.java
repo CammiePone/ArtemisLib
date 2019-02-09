@@ -8,38 +8,37 @@ public class SizeDefaultCap implements ISizeCap {
 	float defaultWidth;
 	float defaultHeight;
 
-	public SizeDefaultCap(){
+	public SizeDefaultCap(){}
 
-	}
-
-	public SizeDefaultCap(boolean transformed, float defaultWidth, float defaultHeight) {
+	public SizeDefaultCap(boolean transformed, float defaultWidth, float defaultHeight)
+	{
 		this.transformed = transformed;
 		this.defaultWidth = defaultWidth;
 		this.defaultHeight = defaultHeight;
 	}
 
 	@Override
-	public boolean getTrans() {
+	public boolean getTrans()
+	{
 		return this.transformed;
 	}
 
 	@Override
-	public void setTrans(boolean transformed) {
-		if(this.transformed != transformed) {
-			this.transformed = transformed;
-		}
+	public void setTrans(boolean transformed)
+	{
+		this.transformed = transformed;
 	}
 
 	@Override
-	public float getDefaultWidth() {
+	public float getDefaultWidth()
+	{
 		return this.defaultWidth;
 	}
 
 	@Override
-	public void setDefaultWidth(float defaultWidth) {
-		if(this.defaultWidth != defaultWidth){
-			this.defaultWidth = defaultWidth;
-		}
+	public void setDefaultWidth(float defaultWidth)
+	{
+		this.defaultWidth = defaultWidth;
 	}
 
 	@Override
@@ -48,19 +47,20 @@ public class SizeDefaultCap implements ISizeCap {
 	}
 
 	@Override
-	public void setDefaultHeight(float defaultHeight) {
-		if(this.defaultHeight != defaultHeight){
-			this.defaultHeight = defaultHeight;
-		}
+	public void setDefaultHeight(float defaultHeight)
+	{
+		this.defaultHeight = defaultHeight;
 	}
 
 	@Override
-	public NBTTagCompound saveNBT() {
+	public NBTTagCompound saveNBT()
+	{
 		return (NBTTagCompound) SizeCapStorage.storage.writeNBT(SizeCapPro.sizeCapability, this, null);
 	}
 
 	@Override
-	public void loadNBT(NBTTagCompound compound) {
+	public void loadNBT(NBTTagCompound compound)
+	{
 		SizeCapStorage.storage.readNBT(SizeCapPro.sizeCapability, this, null, compound);
 	}
 }
