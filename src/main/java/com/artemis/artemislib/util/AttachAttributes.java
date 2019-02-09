@@ -7,6 +7,7 @@ import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -44,6 +45,11 @@ public class AttachAttributes
 			final boolean hasHeightModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
 			final boolean hasWidthModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
 
+			final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
+			final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
+			final float height = (float) (cap.getDefaultHeight() * heightAttribute);
+			final float width = (float) (cap.getDefaultWidth() * widthAttribute);
+
 			if(hasHeightModifier != true || hasWidthModifier != true)
 			{
 				if(cap.getTrans() != true)
@@ -55,14 +61,9 @@ public class AttachAttributes
 
 				if(cap.getTrans() == true)
 				{
-					final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
-					final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-					final float height = (float) (cap.getDefaultHeight() * heightAttribute);
-					final float width = (float) (cap.getDefaultWidth() * widthAttribute);
 
 					final float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
 					player.eyeHeight = eyeHeight;
-
 					player.height = height;
 					player.width = width;
 
@@ -76,6 +77,12 @@ public class AttachAttributes
 			{
 				if(cap.getTrans() == true)
 				{
+					player.height = height;
+					player.width = width;
+					final double d0 = width / 2.0D;
+					final AxisAlignedBB aabb = player.getEntityBoundingBox();
+					player.setEntityBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
+							player.posX + d0, aabb.minY + height, player.posZ + d0));
 					player.eyeHeight = player.getDefaultEyeHeight();
 					cap.setTrans(false);
 				}
@@ -96,6 +103,10 @@ public class AttachAttributes
 
 				final boolean hasHeightModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
 				final boolean hasWidthModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
+				final double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
+				final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
+				final float height = (float) (cap.getDefaultHeight() * heightAttribute);
+				final float width = (float) (cap.getDefaultWidth() * widthAttribute);
 
 				if(hasHeightModifier != true || hasWidthModifier != true)
 				{
@@ -108,11 +119,6 @@ public class AttachAttributes
 
 					if(cap.getTrans() == true)
 					{
-						final double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
-						final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-						final float height = (float) (cap.getDefaultHeight() * heightAttribute);
-						final float width = (float) (cap.getDefaultWidth() * widthAttribute);
-
 						entity.height = height;
 						entity.width = width;
 
@@ -126,6 +132,12 @@ public class AttachAttributes
 				{
 					if(cap.getTrans() == true)
 					{
+						entity.height = height;
+						entity.width = width;
+						final double d0 = width / 2.0D;
+						final AxisAlignedBB aabb = entity.getEntityBoundingBox();
+						entity.setEntityBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
+								entity.posX + d0, aabb.minY + height, entity.posZ + d0));
 						cap.setTrans(false);
 					}
 				}
@@ -145,6 +157,13 @@ public class AttachAttributes
 		GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
 		GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
 				event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
+
+		if(entity instanceof EntityPlayer) {
+			final EntityPlayer player = (EntityPlayer) entity;
+			if(player.getRidingEntity() instanceof AbstractHorse) {
+				//				GlStateManager.translate(0, scaleHeight * 2, 0);
+			}
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

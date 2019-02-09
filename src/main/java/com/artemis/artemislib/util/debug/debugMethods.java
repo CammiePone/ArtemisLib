@@ -2,13 +2,10 @@ package com.artemis.artemislib.util.debug;
 
 import java.util.UUID;
 
-import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.math.RayTraceResult.Type;
@@ -69,24 +66,27 @@ public class debugMethods {
 				if(target instanceof EntityLivingBase)
 				{
 					final EntityLivingBase entity = (EntityLivingBase) target;
-					final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
-					final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
-					final AttributeModifier heightModifier = entityHeight.getModifier(uuidH);
-					final AttributeModifier widthModifier = entityWidth.getModifier(uuidW);
-
-					if(heightModifier == null && widthModifier == null)
-					{
-						System.out.println("Adding Modifiers");
-						entityHeight.applyModifier(constructHeightModifier());
-						entityWidth.applyModifier(constructWidthModifier());
-					}
-
-					if(heightModifier != null && widthModifier != null)
-					{
-						System.out.println("Removing Modifiers");
-						entityHeight.removeModifier(uuidH);
-						entityWidth.removeModifier(uuidW);
-					}
+					//					UserMethods.addModifier(entity, -0.8D, -0.8D);
+					//					UserMethods.removeodifier(entity);
+					//					UserMethods.addAndReplaceModifier(entity, -0.8, -0.8);
+					//					final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
+					//					final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
+					//					final AttributeModifier heightModifier = entityHeight.getModifier(uuidH);
+					//					final AttributeModifier widthModifier = entityWidth.getModifier(uuidW);
+					//
+					//					if(heightModifier == null && widthModifier == null)
+					//					{
+					//						System.out.println("Adding Modifiers");
+					//						entityHeight.applyModifier(constructHeightModifier());
+					//						entityWidth.applyModifier(constructWidthModifier());
+					//					}
+					//
+					//					if(heightModifier != null && widthModifier != null)
+					//					{
+					//						System.out.println("Removing Modifiers");
+					//						entityHeight.removeModifier(uuidH);
+					//						entityWidth.removeModifier(uuidW);
+					//					}
 				}
 			}
 			setTarget(-1);
