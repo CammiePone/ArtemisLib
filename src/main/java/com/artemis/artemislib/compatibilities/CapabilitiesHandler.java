@@ -11,8 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CapabilitiesHandler
-{
+public class CapabilitiesHandler {
+
 	@SubscribeEvent
 	public void onAddCapabilites(AttachCapabilitiesEvent<Entity> event)
 	{

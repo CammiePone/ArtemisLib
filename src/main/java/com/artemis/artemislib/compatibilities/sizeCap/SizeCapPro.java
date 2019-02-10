@@ -6,8 +6,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
-{
+public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>{
+
 	private ISizeCap capabilitySize = null;
 
 	public SizeCapPro()
@@ -19,16 +19,16 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
 	{
 		this.capabilitySize = capability;
 	}
-	
+
 	@CapabilityInject(ISizeCap.class)
 	public static final Capability<ISizeCap> sizeCapability = null;
-	
+
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
 		return capability == sizeCapability;
 	}
-	
+
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
@@ -36,16 +36,15 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
 		{
 			return (T) this.capabilitySize;
 		}
-		
 		return null;
 	}
-	
+
 	@Override
 	public NBTTagCompound serializeNBT()
 	{
 		return this.capabilitySize.saveNBT();
 	}
-	
+
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt)
 	{

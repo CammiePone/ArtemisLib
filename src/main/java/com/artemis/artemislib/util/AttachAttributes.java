@@ -27,12 +27,12 @@ public class AttachAttributes
 		{
 			final EntityLivingBase entity = (EntityLivingBase) event.getEntity();
 			final AbstractAttributeMap map = entity.getAttributeMap();
-			
+
 			map.registerAttribute(ArtemisLibAttributes.ENTITY_HEIGHT);
 			map.registerAttribute(ArtemisLibAttributes.ENTITY_WIDTH);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
@@ -86,8 +86,10 @@ public class AttachAttributes
 					player.eyeHeight = player.getDefaultEyeHeight();
 					cap.setTrans(false);
 				}
+			}
+		}
 	}
-	
+
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event)
 	{
@@ -137,11 +139,11 @@ public class AttachAttributes
 						entity.setEntityBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
 								entity.posX + d0, aabb.minY + height, entity.posZ + d0));
 						cap.setTrans(false);
-          }
-        }
-      }
-    }
-  }
+					}
+				}
+			}
+		}
+	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
