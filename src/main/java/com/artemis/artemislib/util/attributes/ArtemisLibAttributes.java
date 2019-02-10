@@ -11,5 +11,5 @@ public class ArtemisLibAttributes
 			1.0F, Float.MIN_VALUE, Float.MAX_VALUE)).setDescription("Entity Height").setShouldWatch(true);
 	
 	public static final IAttribute ENTITY_WIDTH = (new RangedAttribute((IAttribute) null, Reference.MODID + ".entityWidth", 
-			1.0F, Float.MIN_VALUE, Float.MAX_VALUE)).setDescription("Entity Width").setShouldWatch(true);
+			1.0F, -0.252F, Float.MAX_VALUE)).setDescription("Entity Width").setShouldWatch(true);
 }
