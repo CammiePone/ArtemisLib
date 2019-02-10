@@ -7,12 +7,9 @@ public class SizeDefaultCap implements ISizeCap
 	boolean transformed = false;
 	float defaultWidth;
 	float defaultHeight;
-	
-	public SizeDefaultCap()
-	{
 
-	}
-	
+	public SizeDefaultCap(){}
+
 	public SizeDefaultCap(boolean transformed, float defaultWidth, float defaultHeight)
 	{
 		this.transformed = transformed;
@@ -29,10 +26,7 @@ public class SizeDefaultCap implements ISizeCap
 	@Override
 	public void setTrans(boolean transformed)
 	{
-		if(this.transformed != transformed)
-		{
-			this.transformed = transformed;
-		}
+		this.transformed = transformed;
 	}
 	
 	@Override
@@ -44,9 +38,7 @@ public class SizeDefaultCap implements ISizeCap
 	@Override
 	public void setDefaultWidth(float defaultWidth)
 	{
-		if(this.defaultWidth != defaultWidth){
-			this.defaultWidth = defaultWidth;
-		}
+		this.defaultWidth = defaultWidth;
 	}
 	
 	@Override
@@ -58,10 +50,7 @@ public class SizeDefaultCap implements ISizeCap
 	@Override
 	public void setDefaultHeight(float defaultHeight)
 	{
-		if(this.defaultHeight != defaultHeight)
-		{
-			this.defaultHeight = defaultHeight;
-		}
+		this.defaultHeight = defaultHeight;
 	}
 	
 	@Override

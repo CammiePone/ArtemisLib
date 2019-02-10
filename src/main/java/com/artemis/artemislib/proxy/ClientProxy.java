@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.IThreadListener;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -40,5 +41,18 @@ public class ClientProxy extends CommonProxy
 		final EntityPlayer player = context.side.isClient() ? Minecraft.getMinecraft().player : context.getServerHandler().player;
 		final Entity entity = player.world.getEntityByID(entityID);
 		return entity instanceof EntityLivingBase ? (EntityLivingBase) entity : null;
+	}
+
+	@Override
+	public IThreadListener getThreadListener(final MessageContext context)
+	{
+		if (context.side.isClient())
+		{
+			return Minecraft.getMinecraft();
+		}
+		else
+		{
+			return context.getServerHandler().player.server;
+		}
 	}
 }

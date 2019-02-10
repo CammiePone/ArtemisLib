@@ -9,12 +9,12 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
 {
 	private ISizeCap capabilitySize = null;
-	
+
 	public SizeCapPro()
 	{
 		this.capabilitySize = new SizeDefaultCap();
 	}
-	
+
 	public SizeCapPro(ISizeCap capability)
 	{
 		this.capabilitySize = capability;
