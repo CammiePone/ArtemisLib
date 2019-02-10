@@ -2,6 +2,7 @@ package com.artemis.artemislib.util.debug;
 
 import java.util.UUID;
 
+import com.artemis.artemislib.util.UserMethods;
 import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
 
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,7 @@ public class debugMethods {
 		final EntityPlayer player = event.player;
 		final boolean client = player.world.isRemote;
 
+		/* Get's the Entity ID the Player is Looking At and Sends it to the Apply Modifier Methods in the LivingUpdateEven Below */
 		if(event.phase == Phase.END && client) {
 			if(player.isSneaking() && player.ticksExisted%20==0) {
 				if(player.getHeldItemMainhand().getItem() == Items.APPLE) {
@@ -52,26 +54,26 @@ public class debugMethods {
 
 		final EntityLivingBase ent = event.getEntityLiving();
 
+		/* to get information from Entities that aren't the player  */
 		if(!(ent instanceof EntityPlayer)) {
 			if(ent.world.isRemote) {
 
 			}
 		}
 
+		/* Handles the Entity ID obtained in the Above PlayerTickEvent */
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			final EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-
 			if(!(getTarget() < 0))
 			{
 				final Entity target = player.world.getEntityByID(getTarget());
 				System.out.println(target.getName() + " With ID: " + getTarget() + " Found");
 
+				/* Debug Code Goes in this Code Block */
 				if(target instanceof EntityLivingBase)
 				{
 					final EntityLivingBase entity = (EntityLivingBase) target;
-					//					UserMethods.addModifier(entity, -0.8D, -0.8D);
-					//					UserMethods.removeodifier(entity);
-					//					UserMethods.addAndReplaceModifier(entity, -0.8, -0.8);
+
 					final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
 					final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
 					final AttributeModifier heightModifier = entityHeight.getModifier(uuidH);
@@ -80,22 +82,22 @@ public class debugMethods {
 					if(heightModifier == null && widthModifier == null)
 					{
 						System.out.println("Adding Modifiers");
-						entityHeight.applyModifier(constructHeightModifier());
-						entityWidth.applyModifier(constructWidthModifier());
+						UserMethods.addModifier(entity, -0.8D, -0.8D);
 					}
 
 					if(heightModifier != null && widthModifier != null)
 					{
 						System.out.println("Removing Modifiers");
-						entityHeight.removeModifier(uuidH);
-						entityWidth.removeModifier(uuidW);
+						UserMethods.removeodifier(entity);
 					}
 				}
 			}
+			/* Removed the Target after doing the Code Above so It doesn't Continuously run the code */
 			setTarget(-1);
 		}
 	}
 
+	/* Tracker Events for Debugging */
 	@SubscribeEvent
 	public void startTracking(StartTracking event)
 	{
@@ -128,6 +130,7 @@ public class debugMethods {
 		//		}
 	}
 
+	/* Old Debug Modifier, Can Remove */
 	public static AttributeModifier constructHeightModifier()
 	{
 		return new AttributeModifier(uuidH, "resize", -0.5f, 0);
@@ -137,6 +140,7 @@ public class debugMethods {
 		return new AttributeModifier(uuidW, "resize", -0.5f, 0);
 	}
 
+	/* Target Handlers */
 	public static int getTarget()
 	{
 		return target;

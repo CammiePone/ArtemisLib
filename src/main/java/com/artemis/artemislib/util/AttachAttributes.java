@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -37,7 +38,6 @@ public class AttachAttributes
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
 		final EntityPlayer player = event.player;
-
 		if(player.hasCapability(SizeCapPro.sizeCapability, null))
 		{
 			final ISizeCap cap = player.getCapability(SizeCapPro.sizeCapability, null);
@@ -47,22 +47,46 @@ public class AttachAttributes
 
 			final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
 			final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-			final float height = (float) (cap.getDefaultHeight() * heightAttribute);
-			final float width = (float) (cap.getDefaultWidth() * widthAttribute);
+			float height = (float) (cap.getDefaultHeight() * heightAttribute);
+			float width = (float) (cap.getDefaultWidth() * widthAttribute);
 
+			/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
 			if(hasHeightModifier != true || hasWidthModifier != true)
 			{
+				/* If the Entity Does have a Modifier get it's size before changing it's size */
 				if(cap.getTrans() != true)
 				{
-					cap.setDefaultHeight(player.height);
-					cap.setDefaultWidth(player.width);
+					cap.setDefaultHeight(1.8f);
+					cap.setDefaultWidth(0.6f);
 					cap.setTrans(true);
 				}
-
+				/* Handles Resizing while true */
 				if(cap.getTrans() == true)
 				{
+					float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
+					if (player.isSneaking())
+					{
+						height = height*MathHelper.ceil(0.9f);
+						eyeHeight = height*MathHelper.ceil(0.9f);
+					}
+					if (player.isElytraFlying())
+					{
+						height = height*0.33f;
+					}
+					if (player.isPlayerSleeping())
+					{
+						width = 0.2F;
+						height = 0.2F;
+					}
+					if (player.isRiding())
+					{
+						//eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute)*1.4f;
+						//height = height*1.4f;
+					}
 
-					final float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
+					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
+					width = MathHelper.clamp(width, 0.252F, width);
+					height = MathHelper.clamp(height, 0.252F, height);
 					player.eyeHeight = eyeHeight;
 					player.height = height;
 					player.width = width;
@@ -70,11 +94,12 @@ public class AttachAttributes
 					final double d0 = width / 2.0D;
 					final AxisAlignedBB aabb = player.getEntityBoundingBox();
 					player.setEntityBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
-							player.posX + d0, aabb.minY + height, player.posZ + d0));
+							player.posX + d0, aabb.minY + player.height, player.posZ + d0));
 				}
 			}
-			else
+			else /* If the Entity Does not have any Modifiers */
 			{
+				/* Returned the Entities Size Back to Normal */
 				if(cap.getTrans() == true)
 				{
 					player.height = height;
@@ -108,8 +133,10 @@ public class AttachAttributes
 				final float height = (float) (cap.getDefaultHeight() * heightAttribute);
 				final float width = (float) (cap.getDefaultWidth() * widthAttribute);
 
+				/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
 				if(hasHeightModifier != true || hasWidthModifier != true)
 				{
+					/* If the Entity Does have a Modifier get it's size before changing it's size */
 					if(cap.getTrans() != true)
 					{
 						cap.setDefaultHeight(entity.height);
@@ -117,6 +144,7 @@ public class AttachAttributes
 						cap.setTrans(true);
 					}
 
+					/* Handles Resizing while true */
 					if(cap.getTrans() == true)
 					{
 						entity.height = height;
@@ -125,11 +153,12 @@ public class AttachAttributes
 						final double d0 = width / 2.0D;
 						final AxisAlignedBB aabb = entity.getEntityBoundingBox();
 						entity.setEntityBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
-								entity.posX + d0, aabb.minY + height, entity.posZ + d0));
+								entity.posX + d0, aabb.minY + entity.height, entity.posZ + d0));
 					}
 				}
-				else
+				else /* If the Entity Does not have any Modifiers */
 				{
+					/* Returned the Entities Size Back to Normal */
 					if(cap.getTrans() == true)
 					{
 						entity.height = height;
@@ -158,9 +187,12 @@ public class AttachAttributes
 		GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
 				event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
 
-		if(entity instanceof EntityPlayer) {
+		if(entity instanceof EntityPlayer)
+		{
 			final EntityPlayer player = (EntityPlayer) entity;
-			if(player.getRidingEntity() instanceof AbstractHorse) {
+			if(player.getRidingEntity() instanceof AbstractHorse)
+			{
+				GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
 				//				GlStateManager.translate(0, scaleHeight * 2, 0);
 			}
 		}

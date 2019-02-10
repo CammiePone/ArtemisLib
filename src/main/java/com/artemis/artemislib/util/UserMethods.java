@@ -52,7 +52,6 @@ public class UserMethods {
 
 		if(heightModifier == null && widthModifier == null)
 		{
-			System.out.println("Adding Modifiers");
 			setHeightScale(height);
 			setWidthScale(width);
 			entityHeight.applyModifier(constructHeightModifier());
@@ -68,7 +67,6 @@ public class UserMethods {
 
 		if(heightModifier == null && widthModifier == null)
 		{
-			System.out.println("Adding Modifiers");
 			setHeightScale(height);
 			setWidthScale(width);
 			entityHeight.applyModifier(constructHeightModifier());
@@ -118,7 +116,6 @@ public class UserMethods {
 
 		if(heightModifier != null && widthModifier != null)
 		{
-			System.out.println("Removing Modifiers");
 			entityHeight.removeModifier(uuidH);
 			entityWidth.removeModifier(uuidW);
 		}
