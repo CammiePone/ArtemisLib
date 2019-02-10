@@ -7,12 +7,14 @@ import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.util.math.MathHelper;
 
 public class UserMethods {
 
 	private static UUID uuidH = UUID.fromString("f269dd95-41c1-49b5-ab89-be40c5da69b0");
 	private static UUID uuidW = UUID.fromString("0bc6b919-49e9-4f64-8702-20b220ea9d84");
 
+	static int operation;
 	static double heightScale;
 	static double widthScale;
 
@@ -34,16 +36,24 @@ public class UserMethods {
 		widthScale = width;
 	}
 
+	private static int getOperation() {
+		return operation;
+	}
+
+	private static void setOperation(int operation) {
+		operation = MathHelper.clamp(operation, 0, 2);
+	}
+
 	private static AttributeModifier constructHeightModifier()
 	{
-		return new AttributeModifier(uuidH, "resize", getHeightScale(), 0);
+		return new AttributeModifier(uuidH, "resize", getHeightScale(), getOperation());
 	}
 	private static AttributeModifier constructWidthModifier()
 	{
-		return new AttributeModifier(uuidW, "resize", getWidthScale(), 0);
+		return new AttributeModifier(uuidW, "resize", getWidthScale(), getOperation());
 	}
 
-	public static void addModifier(EntityLivingBase entity, double height, double width)
+	public static void addModifier(EntityLivingBase entity, double height, double width, int operation)
 	{
 		final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
 		final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
@@ -54,12 +64,13 @@ public class UserMethods {
 		{
 			setHeightScale(height);
 			setWidthScale(width);
+			setOperation(operation);
 			entityHeight.applyModifier(constructHeightModifier());
 			entityWidth.applyModifier(constructWidthModifier());
 		}
 	}
 
-	public static void addAndReplaceModifier(EntityLivingBase entity, double height, double width) {
+	public static void addAndReplaceModifier(EntityLivingBase entity, double height, double width, int operation) {
 		final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
 		final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
 		final AttributeModifier heightModifier = entityHeight.getModifier(uuidH);
@@ -69,6 +80,7 @@ public class UserMethods {
 		{
 			setHeightScale(height);
 			setWidthScale(width);
+			setOperation(operation);
 			entityHeight.applyModifier(constructHeightModifier());
 			entityWidth.applyModifier(constructWidthModifier());
 		}
@@ -88,11 +100,12 @@ public class UserMethods {
 		}
 	}
 
-	public static void replaceModifer(EntityLivingBase entity, double height, double width) {
+	public static void replaceModifer(EntityLivingBase entity, double height, double width, int operation) {
 		final IAttributeInstance entityHeight = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT);
 		final IAttributeInstance entityWidth = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH);
 		final AttributeModifier heightModifier = entityHeight.getModifier(uuidH);
 		final AttributeModifier widthModifier = entityWidth.getModifier(uuidW);
+		setOperation(operation);
 		if(heightModifier != null && heightModifier.getAmount() != height)
 		{
 			entityHeight.removeModifier(uuidH);

@@ -82,7 +82,7 @@ public class debugMethods {
 					if(heightModifier == null && widthModifier == null)
 					{
 						System.out.println("Adding Modifiers");
-						UserMethods.addModifier(entity, -0.8D, -0.8D);
+						UserMethods.addModifier(entity, -0.8D, -0.8D, 0);
 					}
 
 					if(heightModifier != null && widthModifier != null)

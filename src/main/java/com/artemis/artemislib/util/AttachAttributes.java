@@ -192,8 +192,8 @@ public class AttachAttributes
 			final EntityPlayer player = (EntityPlayer) entity;
 			if(player.getRidingEntity() instanceof AbstractHorse)
 			{
-				GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
-				//				GlStateManager.translate(0, scaleHeight * 2, 0);
+				//GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
+				//GlStateManager.translate(0, scaleHeight * 2, 0);
 			}
 		}
 	}
