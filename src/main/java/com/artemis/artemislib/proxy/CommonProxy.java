@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy
 {
-
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		NetworkHandler.init();
@@ -35,9 +34,9 @@ public class CommonProxy
 
 	public void registerItemRenderer(Item item, int meta, String id)
 	{
-
+		
 	}
-
+  
 	public IThreadListener getThreadListener(final MessageContext context)
 	{
 		if(context.side.isServer())
@@ -58,16 +57,17 @@ public class CommonProxy
 			final Entity entity = context.getServerHandler().player.world.getEntityByID(entityID);
 			return entity instanceof EntityLivingBase ? (EntityLivingBase) entity : null;
 		}
+		
 		throw new WrongSideException("Tried to get the player from a client-side MessageContext on the dedicated server");
 	}
-
+	
 	class WrongSideException extends RuntimeException
 	{
 		public WrongSideException(final String message)
 		{
 			super(message);
 		}
-
+		
 		public WrongSideException(final String message, final Throwable cause)
 		{
 			super(message, cause);

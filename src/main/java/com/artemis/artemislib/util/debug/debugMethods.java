@@ -16,24 +16,29 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
-public class debugMethods {
-
+public class debugMethods
+{
 	private static UUID uuidH = UUID.fromString("f269dd95-41c1-49b5-ab89-be40c5da69b0");
 	private static UUID uuidW = UUID.fromString("0bc6b919-49e9-4f64-8702-20b220ea9d84");
-
-	private static int target = -1;
+	
+	private static int target;
 
 	@SubscribeEvent
-	public void playerTick(TickEvent.PlayerTickEvent event) {
+	public void playerTick(TickEvent.PlayerTickEvent event)
+	{
 		final EntityPlayer player = event.player;
 		final boolean client = player.world.isRemote;
 
-		if(event.phase == Phase.END && client) {
-			if(player.isSneaking() && player.ticksExisted%20==0) {
-				if(player.getHeldItemMainhand().getItem() == Items.APPLE) {
+		if(event.phase == Phase.END && client) 
+    {
+			if(player.isSneaking() && player.ticksExisted%20==0) 
+      {
+				if(player.getHeldItemMainhand().getItem() == Items.APPLE) 
+        {
 					setTarget(player.getEntityId());
 				}
-				if(Minecraft.getMinecraft().objectMouseOver != null && Minecraft.getMinecraft().objectMouseOver.typeOfHit == Type.ENTITY) {
+				if(Minecraft.getMinecraft().objectMouseOver != null && Minecraft.getMinecraft().objectMouseOver.typeOfHit == Type.ENTITY)
+				{
 					final int id = Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
 					if(getTarget() != id) {
 						setTarget(id);
@@ -43,7 +48,7 @@ public class debugMethods {
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void LivingUpdateEvent(LivingUpdateEvent event) {
 
@@ -93,38 +98,6 @@ public class debugMethods {
 		}
 	}
 
-	@SubscribeEvent
-	public void startTracking(StartTracking event)
-	{
-		//		if(event.getEntityLiving() != null && event.getEntityLiving().hasCapability(SizeCapPro.sizeCapability, null))
-		//		{
-		//			final EntityLivingBase entity = event.getEntityLiving();
-		//			System.out.println(entity.getName() + " started Tracking " + event.getTarget().getName());
-		//
-		//			if(event.getTarget() instanceof EntityLivingBase)
-		//			{
-		//				final EntityLivingBase target = (EntityLivingBase) event.getTarget();
-		//				System.out.println(target.getEntityAttribute(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers());
-		//			}
-		//		}
-	}
-
-	@SubscribeEvent
-	public void stopTracking(StopTracking event)
-	{
-		//		if(event.getEntityLiving() != null && event.getEntityLiving().hasCapability(SizeCapPro.sizeCapability, null))
-		//		{
-		//			final EntityLivingBase entity = event.getEntityLiving();
-		//			System.out.println(entity.getName() + " stopped Tracking " + event.getTarget().getName());
-		//
-		//			if(event.getTarget() instanceof EntityLivingBase)
-		//			{
-		//				final EntityLivingBase target = (EntityLivingBase) event.getTarget();
-		//				System.out.println(target.getEntityAttribute(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers());
-		//			}
-		//		}
-	}
-
 	public static AttributeModifier constructHeightModifier()
 	{
 		return new AttributeModifier(uuidH, "resize", -0.5f, 0);
@@ -143,5 +116,4 @@ public class debugMethods {
 	{
 		debugMethods.target = target;
 	}
-
 }
