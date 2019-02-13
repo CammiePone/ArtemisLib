@@ -179,9 +179,11 @@ public class AttachAttributes
 	public void onEntityRenderPre(RenderLivingEvent.Pre event)
 	{
 		final EntityLivingBase entity = event.getEntity();
-		final float scaleHeight = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
-		final float scaleWidth = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-
+		final float height = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
+		final float width = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
+		float scaleHeight = MathHelper.clamp(height, 0.01F, height);
+		float scaleWidth = MathHelper.clamp(width, 0.01F, width);
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
 		GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
