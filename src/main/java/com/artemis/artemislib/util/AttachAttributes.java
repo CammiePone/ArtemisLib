@@ -130,8 +130,8 @@ public class AttachAttributes
 				final boolean hasWidthModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
 				final double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
 				final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-				final float height = (float) (cap.getDefaultHeight() * heightAttribute);
-				final float width = (float) (cap.getDefaultWidth() * widthAttribute);
+				float height = (float) (cap.getDefaultHeight() * heightAttribute);
+				float width = (float) (cap.getDefaultWidth() * widthAttribute);
 
 				/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
 				if(hasHeightModifier != true || hasWidthModifier != true)
@@ -147,6 +147,8 @@ public class AttachAttributes
 					/* Handles Resizing while true */
 					if(cap.getTrans() == true)
 					{
+						width = MathHelper.clamp(width, 0.04F, width);
+						height = MathHelper.clamp(height, 0.08F, height);
 						entity.height = height;
 						entity.width = width;
 
@@ -181,9 +183,9 @@ public class AttachAttributes
 		final EntityLivingBase entity = event.getEntity();
 		final float height = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
 		final float width = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-		float scaleHeight = MathHelper.clamp(height, 0.01F, height);
-		float scaleWidth = MathHelper.clamp(width, 0.01F, width);
-		
+		final float scaleHeight = MathHelper.clamp(height, 0.01F, height);
+		final float scaleWidth = MathHelper.clamp(width, 0.01F, width);
+
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
 		GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
