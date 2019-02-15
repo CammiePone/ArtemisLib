@@ -1,0 +1,30 @@
+modLoader="javafml" #mandatory
+loaderVersion="[25,) #mandatory
+issueTrackerURL="https://github.com/CammiePone/ArtemisLib/issues/"
+displayURL="https://minecraft.curseforge.com/projects/artemislib"
+credits="Thanks to XzeroAir and Phylogeny for their huge help!"
+authors="Camellias, XzeroAir"
+
+
+
+[[mods]] #mandatory
+modId="artemislib" #mandatory
+version="v1.0.4" #mandatory
+displayName="ArtemisLib" #mandatory
+description='''It's a library. For other mods to use. Use it.''' #mandatory
+
+
+
+[[dependencies.artemislib]] #optional
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+    
+[[dependencies.artemislib]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"
