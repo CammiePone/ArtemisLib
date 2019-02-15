@@ -29,7 +29,6 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>{
 		return capability == sizeCapability;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
 	{

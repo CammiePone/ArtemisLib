@@ -168,7 +168,6 @@ public class AttachAttributes
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onEntityRenderPre(RenderLivingEvent.Pre event)
@@ -195,7 +194,6 @@ public class AttachAttributes
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onLivingRenderPost(RenderLivingEvent.Post event)

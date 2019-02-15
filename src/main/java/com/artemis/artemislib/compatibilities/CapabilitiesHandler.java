@@ -23,7 +23,7 @@ public class CapabilitiesHandler {
 			final float defaultWidth = entity.width;
 			final float defaultHeight = entity.height;
 			final ISizeCap cap = new SizeDefaultCap(transformed, defaultWidth, defaultHeight);
-			event.addCapability(new ResourceLocation(Reference.MODID, "Capability"), new SizeCapPro(cap));
+			event.addCapability(new ResourceLocation(Reference.MODID, "capability"), new SizeCapPro(cap));
 		}
 	}
 }
