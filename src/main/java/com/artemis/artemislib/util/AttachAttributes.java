@@ -119,7 +119,7 @@ public class AttachAttributes
 		final EntityLivingBase entity = event.getEntityLiving();
 		if(!(entity instanceof EntityPlayer))
 		{
-			final ISizeCap cap = (ISizeCap) entity.getCapability(SizeCapPro.sizeCapability, null);
+			final ISizeCap cap = (ISizeCap) entity.getCapability(SizeCapPro.sizeCapability);
 
 			final boolean hasHeightModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
 			final boolean hasWidthModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
