@@ -1,9 +1,9 @@
-package com.artemis.artemislib.compatibilities;
+package com.artemis.artemislib.capabilities;
 
 import com.artemis.artemislib.Reference;
-import com.artemis.artemislib.compatibilities.sizeCap.ISizeCap;
-import com.artemis.artemislib.compatibilities.sizeCap.SizeCapPro;
-import com.artemis.artemislib.compatibilities.sizeCap.SizeDefaultCap;
+import com.artemis.artemislib.capabilities.sizeCap.ISizeCap;
+import com.artemis.artemislib.capabilities.sizeCap.SizeCapPro;
+import com.artemis.artemislib.capabilities.sizeCap.SizeDefaultCap;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,8 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CapabilitiesHandler {
-
+public class CapabilitiesHandler
+{
 	@SubscribeEvent
 	public void onAddCapabilites(AttachCapabilitiesEvent<Entity> event)
 	{

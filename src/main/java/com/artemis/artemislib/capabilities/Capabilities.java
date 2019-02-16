@@ -1,20 +1,21 @@
-package com.artemis.artemislib.compatibilities;
+package com.artemis.artemislib.capabilities;
 
 import java.util.concurrent.Callable;
 
-import com.artemis.artemislib.compatibilities.sizeCap.ISizeCap;
-import com.artemis.artemislib.compatibilities.sizeCap.SizeCapStorage;
-import com.artemis.artemislib.compatibilities.sizeCap.SizeDefaultCap;
+import com.artemis.artemislib.capabilities.sizeCap.ISizeCap;
+import com.artemis.artemislib.capabilities.sizeCap.SizeCapStorage;
+import com.artemis.artemislib.capabilities.sizeCap.SizeDefaultCap;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
-public class Capabilities {
-
+public class Capabilities
+{
+	
 	public static void init()
 	{
 		CapabilityManager.INSTANCE.register(ISizeCap.class, new SizeCapStorage(), new CababilityFactory());
 	}
-
+	
 	private static class CababilityFactory implements Callable<ISizeCap>
 	{
 		@Override

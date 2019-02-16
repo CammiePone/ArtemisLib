@@ -1,7 +1,7 @@
 package com.artemis.artemislib.proxy;
 
-import com.artemis.artemislib.compatibilities.Capabilities;
-import com.artemis.artemislib.compatibilities.CapabilitiesHandler;
+import com.artemis.artemislib.capabilities.Capabilities;
+import com.artemis.artemislib.capabilities.CapabilitiesHandler;
 import com.artemis.artemislib.util.AttachAttributes;
 import com.artemis.artemislib.util.debug.debugMethods;
 
