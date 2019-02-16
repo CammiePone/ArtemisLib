@@ -1,6 +1,5 @@
 package com.artemis.artemislib.util;
 
-import com.artemis.artemislib.capabilities.sizeCap.ISizeCap;
 import com.artemis.artemislib.capabilities.sizeCap.SizeCapPro;
 import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
 
@@ -38,78 +37,79 @@ public class AttachAttributes
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
 		final EntityPlayer player = event.player;
-		final ISizeCap cap = (ISizeCap) player.getCapability(SizeCapPro.sizeCapability, null);
-		
-		final boolean hasHeightModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
-		final boolean hasWidthModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
-		
-		final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
-		final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
-		float height = (float) (cap.getDefaultHeight() * heightAttribute);
-		float width = (float) (cap.getDefaultWidth() * widthAttribute);
-		
-		/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
-		if(hasHeightModifier != true || hasWidthModifier != true)
+		player.getCapability(SizeCapPro.sizeCapability, null).ifPresent(cap ->
 		{
-			/* If the Entity Does have a Modifier get it's size before changing it's size */
-			if(cap.getTrans() != true)
+			final boolean hasHeightModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
+			final boolean hasWidthModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
+			
+			final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
+			final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
+			float height = (float) (cap.getDefaultHeight() * heightAttribute);
+			float width = (float) (cap.getDefaultWidth() * widthAttribute);
+			
+			/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
+			if(hasHeightModifier != true || hasWidthModifier != true)
 			{
-				cap.setDefaultHeight(1.8f);
-				cap.setDefaultWidth(0.6f);
-				cap.setTrans(true);
-			}
-			/* Handles Resizing while true */
-			if(cap.getTrans() == true)
-			{
-				float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
-				if (player.isSneaking())
+				/* If the Entity Does have a Modifier get it's size before changing it's size */
+				if(cap.getTrans() != true)
 				{
-					height = height*MathHelper.ceil(0.9f);
-					eyeHeight = height*MathHelper.ceil(0.9f);
+					cap.setDefaultHeight(1.8f);
+					cap.setDefaultWidth(0.6f);
+					cap.setTrans(true);
 				}
-				if (player.isElytraFlying())
+				/* Handles Resizing while true */
+				if(cap.getTrans() == true)
 				{
-					height = height*0.33f;
-				}
-				if (player.isPlayerSleeping())
-				{
-					width = 0.2F;
-					height = 0.2F;
-				}
-				if (player.isOnePlayerRiding())
-				{
-					//eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute)*1.4f;
-					//height = height*1.4f;
-				}
-				
-				eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
-				width = MathHelper.clamp(width, 0.252F, width);
-				height = MathHelper.clamp(height, 0.252F, height);
-				//player.eyeHeight = eyeHeight;
-				player.height = height;
-				player.width = width;
+					float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
+					if (player.isSneaking())
+					{
+						height = height*MathHelper.ceil(0.9f);
+						eyeHeight = height*MathHelper.ceil(0.9f);
+					}
+					if (player.isElytraFlying())
+					{
+						height = height*0.33f;
+					}
+					if (player.isPlayerSleeping())
+					{
+						width = 0.2F;
+						height = 0.2F;
+					}
+					if (player.isOnePlayerRiding())
+					{
+						//eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute)*1.4f;
+						//height = height*1.4f;
+					}
+					
+					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
+					width = MathHelper.clamp(width, 0.252F, width);
+					height = MathHelper.clamp(height, 0.252F, height);
+					//player.eyeHeight = eyeHeight;
+					player.height = height;
+					player.width = width;
 
-				final double d0 = width / 2.0D;
-				final AxisAlignedBB aabb = player.getBoundingBox();
-				player.setBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
-						player.posX + d0, aabb.minY + player.height, player.posZ + d0));
+					final double d0 = width / 2.0D;
+					final AxisAlignedBB aabb = player.getBoundingBox();
+					player.setBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
+							player.posX + d0, aabb.minY + player.height, player.posZ + d0));
+				}
 			}
-		}
-		else /* If the Entity Does not have any Modifiers */
-		{
-			/* Returned the Entities Size Back to Normal */
-			if(cap.getTrans() == true)
+			else /* If the Entity Does not have any Modifiers */
 			{
-				player.height = height;
-				player.width = width;
-				final double d0 = width / 2.0D;
-				final AxisAlignedBB aabb = player.getBoundingBox();
-				player.setBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
-						player.posX + d0, aabb.minY + height, player.posZ + d0));
-				//player.eyeHeight = player.getDefaultEyeHeight();
-				cap.setTrans(false);
+				/* Returned the Entities Size Back to Normal */
+				if(cap.getTrans() == true)
+				{
+					player.height = height;
+					player.width = width;
+					final double d0 = width / 2.0D;
+					final AxisAlignedBB aabb = player.getBoundingBox();
+					player.setBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
+							player.posX + d0, aabb.minY + height, player.posZ + d0));
+					//player.eyeHeight = player.getDefaultEyeHeight();
+					cap.setTrans(false);
+				}
 			}
-		}
+		});
 	}
 	
 	@SubscribeEvent
@@ -118,55 +118,57 @@ public class AttachAttributes
 		final EntityLivingBase entity = event.getEntityLiving();
 		if(!(entity instanceof EntityPlayer))
 		{
-			final ISizeCap cap = (ISizeCap) entity.getCapability(SizeCapPro.sizeCapability);
-			
-			final boolean hasHeightModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
-			final boolean hasWidthModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
-			final double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
-			final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
-			final float height = (float) (cap.getDefaultHeight() * heightAttribute);
-			final float width = (float) (cap.getDefaultWidth() * widthAttribute);
-			
-			/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
-			if(hasHeightModifier != true || hasWidthModifier != true)
+			entity.getCapability(SizeCapPro.sizeCapability, null).ifPresent(cap ->
 			{
-				/* If the Entity Does have a Modifier get it's size before changing it's size */
-				if(cap.getTrans() != true)
-				{
-					cap.setDefaultHeight(entity.height);
-					cap.setDefaultWidth(entity.width);
-					cap.setTrans(true);
-				}
+				final boolean hasHeightModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
+				final boolean hasWidthModifier = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
+				final double heightAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
+				final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
+				final float height = (float) (cap.getDefaultHeight() * heightAttribute);
+				final float width = (float) (cap.getDefaultWidth() * widthAttribute);
 				
-				/* Handles Resizing while true */
-				if(cap.getTrans() == true)
+				/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
+				if(hasHeightModifier != true || hasWidthModifier != true)
 				{
-					entity.height = height;
-					entity.width = width;
+					/* If the Entity Does have a Modifier get it's size before changing it's size */
+					if(cap.getTrans() != true)
+					{
+						cap.setDefaultHeight(entity.height);
+						cap.setDefaultWidth(entity.width);
+						cap.setTrans(true);
+					}
 					
-					final double d0 = width / 2.0D;
-					final AxisAlignedBB aabb = entity.getBoundingBox();
-					entity.setBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
-							entity.posX + d0, aabb.minY + entity.height, entity.posZ + d0));
+					/* Handles Resizing while true */
+					if(cap.getTrans() == true)
+					{
+						entity.height = height;
+						entity.width = width;
+						
+						final double d0 = width / 2.0D;
+						final AxisAlignedBB aabb = entity.getBoundingBox();
+						entity.setBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
+								entity.posX + d0, aabb.minY + entity.height, entity.posZ + d0));
+					}
 				}
-			}
-			else /* If the Entity Does not have any Modifiers */
-			{
-				/* Returned the Entities Size Back to Normal */
-				if(cap.getTrans() == true)
+				else /* If the Entity Does not have any Modifiers */
 				{
-					entity.height = height;
-					entity.width = width;
-					final double d0 = width / 2.0D;
-					final AxisAlignedBB aabb = entity.getBoundingBox();
-					entity.setBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
-							entity.posX + d0, aabb.minY + height, entity.posZ + d0));
-					cap.setTrans(false);
+					/* Returned the Entities Size Back to Normal */
+					if(cap.getTrans() == true)
+					{
+						entity.height = height;
+						entity.width = width;
+						final double d0 = width / 2.0D;
+						final AxisAlignedBB aabb = entity.getBoundingBox();
+						entity.setBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
+								entity.posX + d0, aabb.minY + height, entity.posZ + d0));
+						cap.setTrans(false);
+					}
 				}
-			}
+			});
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onEntityRenderPre(RenderLivingEvent.Pre event)
@@ -193,6 +195,7 @@ public class AttachAttributes
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onLivingRenderPost(RenderLivingEvent.Post event)

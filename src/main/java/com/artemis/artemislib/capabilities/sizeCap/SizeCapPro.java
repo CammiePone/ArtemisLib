@@ -6,7 +6,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.NonNullSupplier;
 
 public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
 {
@@ -30,6 +29,7 @@ public class SizeCapPro implements ICapabilitySerializable<NBTTagCompound>
 		return capability == sizeCapability;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
 	{
