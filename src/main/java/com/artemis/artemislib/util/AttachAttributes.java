@@ -84,8 +84,8 @@ public class AttachAttributes
 					}
 
 					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
-					width = MathHelper.clamp(width, 0.252F, width);
-					height = MathHelper.clamp(height, 0.252F, height);
+					width = MathHelper.clamp(width, 0.26F, width);
+					height = MathHelper.clamp(height, 0.26F, height);
 					if(player.getEyeHeight() != eyeHeight) {
 						ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, eyeHeight, "eyeHeight");
 					}
