@@ -16,10 +16,12 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class AttachAttributes
 {
+
 	@SubscribeEvent
 	public void attachAttributes(EntityEvent.EntityConstructing event)
 	{
@@ -27,12 +29,12 @@ public class AttachAttributes
 		{
 			final EntityLivingBase entity = (EntityLivingBase) event.getEntity();
 			final AbstractAttributeMap map = entity.getAttributeMap();
-			
+
 			map.registerAttribute(ArtemisLibAttributes.ENTITY_HEIGHT);
 			map.registerAttribute(ArtemisLibAttributes.ENTITY_WIDTH);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
@@ -41,14 +43,14 @@ public class AttachAttributes
 		{
 			final boolean hasHeightModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getModifiers().isEmpty();
 			final boolean hasWidthModifier = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getModifiers().isEmpty();
-			
+
 			final double heightAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
 			final double widthAttribute = player.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
 			float height = (float) (cap.getDefaultHeight() * heightAttribute);
 			float width = (float) (cap.getDefaultWidth() * widthAttribute);
-			
+
 			/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
-			if(hasHeightModifier != true || hasWidthModifier != true)
+			if((hasHeightModifier != true) || (hasWidthModifier != true))
 			{
 				/* If the Entity Does have a Modifier get it's size before changing it's size */
 				if(cap.getTrans() != true)
@@ -80,11 +82,13 @@ public class AttachAttributes
 						//eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute)*1.4f;
 						//height = height*1.4f;
 					}
-					
+
 					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
 					width = MathHelper.clamp(width, 0.252F, width);
 					height = MathHelper.clamp(height, 0.252F, height);
-					//player.eyeHeight = eyeHeight;
+					if(player.getEyeHeight() != eyeHeight) {
+						ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, eyeHeight, "eyeHeight");
+					}
 					player.height = height;
 					player.width = width;
 
@@ -105,13 +109,14 @@ public class AttachAttributes
 					final AxisAlignedBB aabb = player.getBoundingBox();
 					player.setBoundingBox(new AxisAlignedBB(player.posX - d0, aabb.minY, player.posZ - d0,
 							player.posX + d0, aabb.minY + height, player.posZ + d0));
+					ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, player.getDefaultEyeHeight(), "eyeHeight");
 					//player.eyeHeight = player.getDefaultEyeHeight();
 					cap.setTrans(false);
 				}
 			}
 		});
 	}
-	
+
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event)
 	{
@@ -126,9 +131,9 @@ public class AttachAttributes
 				final double widthAttribute = entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
 				final float height = (float) (cap.getDefaultHeight() * heightAttribute);
 				final float width = (float) (cap.getDefaultWidth() * widthAttribute);
-				
+
 				/* Makes Sure to only Run the Code IF the Entity Has Modifiers */
-				if(hasHeightModifier != true || hasWidthModifier != true)
+				if((hasHeightModifier != true) || (hasWidthModifier != true))
 				{
 					/* If the Entity Does have a Modifier get it's size before changing it's size */
 					if(cap.getTrans() != true)
@@ -137,13 +142,13 @@ public class AttachAttributes
 						cap.setDefaultWidth(entity.width);
 						cap.setTrans(true);
 					}
-					
+
 					/* Handles Resizing while true */
 					if(cap.getTrans() == true)
 					{
 						entity.height = height;
 						entity.width = width;
-						
+
 						final double d0 = width / 2.0D;
 						final AxisAlignedBB aabb = entity.getBoundingBox();
 						entity.setBoundingBox(new AxisAlignedBB(entity.posX - d0, aabb.minY, entity.posZ - d0,
@@ -167,7 +172,7 @@ public class AttachAttributes
 			});
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -176,14 +181,14 @@ public class AttachAttributes
 		final EntityLivingBase entity = event.getEntity();
 		final float height = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getValue();
 		final float width = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getValue();
-		float scaleHeight = MathHelper.clamp(height, 0.01F, height);
-		float scaleWidth = MathHelper.clamp(width, 0.01F, width);
-		
+		final float scaleHeight = MathHelper.clamp(height, 0.01F, height);
+		final float scaleWidth = MathHelper.clamp(width, 0.01F, width);
+
 		GlStateManager.pushMatrix();
 		GlStateManager.scaled(scaleWidth, scaleHeight, scaleWidth);
-		GlStateManager.translated(event.getX() / scaleWidth - event.getX(),
-				event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
-		
+		GlStateManager.translated((event.getX() / scaleWidth) - event.getX(),
+				(event.getY() / scaleHeight) - event.getY(), (event.getZ() / scaleWidth) - event.getZ());
+
 		if(entity instanceof EntityPlayer)
 		{
 			final EntityPlayer player = (EntityPlayer) entity;
@@ -194,7 +199,7 @@ public class AttachAttributes
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent

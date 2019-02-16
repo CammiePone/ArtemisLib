@@ -14,15 +14,15 @@ public class Main
 {
 	//Instance
 	public static Main instance;
-	
+
 	public Main()
 	{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        instance = this;
-        
-        MinecraftForge.EVENT_BUS.register(this);
+		instance = this;
+
+		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
 	//----Proxy----//
 	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
