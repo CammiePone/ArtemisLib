@@ -1,5 +1,7 @@
 package com.artemis.artemislib;
 
+import java.util.logging.Logger;
+
 import com.artemis.artemislib.proxy.ClientProxy;
 import com.artemis.artemislib.proxy.CommonProxy;
 
@@ -14,6 +16,8 @@ public class Main
 {
 	//Instance
 	public static Main instance;
+
+	public static Logger logger;
 
 	public Main()
 	{
