@@ -85,7 +85,7 @@ public class AttachAttributes
 					}
 
 					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
-					width = MathHelper.clamp(width, 0.252F, width);
+					width = MathHelper.clamp(width, 0.15F, width);
 					height = MathHelper.clamp(height, 0.252F, height);
 					player.eyeHeight = eyeHeight;
 					player.height = height;
@@ -181,23 +181,26 @@ public class AttachAttributes
 	public void onEntityRenderPre(RenderLivingEvent.Pre event)
 	{
 		final EntityLivingBase entity = event.getEntity();
-		final float height = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_HEIGHT).getAttributeValue();
-		final float width = (float) entity.getAttributeMap().getAttributeInstance(ArtemisLibAttributes.ENTITY_WIDTH).getAttributeValue();
-		final float scaleHeight = MathHelper.clamp(height, 0.01F, height);
-		final float scaleWidth = MathHelper.clamp(width, 0.01F, width);
-
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
-		GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
-				event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
-
-		if(entity instanceof EntityPlayer)
+		
+		if(entity.hasCapability(SizeCapPro.sizeCapability, null))
 		{
-			final EntityPlayer player = (EntityPlayer) entity;
-			if(player.getRidingEntity() instanceof AbstractHorse)
+			final ISizeCap cap = entity.getCapability(SizeCapPro.sizeCapability, null);
+			float scaleHeight = entity.height / cap.getDefaultHeight();
+			float scaleWidth = entity.width / cap.getDefaultWidth();
+	
+			GlStateManager.pushMatrix();
+			GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
+			GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
+					event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
+	
+			if(entity instanceof EntityPlayer)
 			{
-				//GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
-				//GlStateManager.translate(0, scaleHeight * 2, 0);
+				final EntityPlayer player = (EntityPlayer) entity;
+				if(player.getRidingEntity() instanceof AbstractHorse)
+				{
+					//GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
+					//GlStateManager.translate(0, scaleHeight * 2, 0);
+				}
 			}
 		}
 	}

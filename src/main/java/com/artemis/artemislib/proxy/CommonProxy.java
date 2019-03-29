@@ -6,7 +6,6 @@ import com.artemis.artemislib.compatibilities.Capabilities;
 import com.artemis.artemislib.compatibilities.CapabilitiesHandler;
 import com.artemis.artemislib.network.NetworkHandler;
 import com.artemis.artemislib.util.AttachAttributes;
-import com.artemis.artemislib.util.debug.debugMethods;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +29,6 @@ public class CommonProxy
 	{
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesHandler());
 		MinecraftForge.EVENT_BUS.register(new AttachAttributes());
-		MinecraftForge.EVENT_BUS.register(new debugMethods());
 	}
 
 	public void registerItemRenderer(Item item, int meta, String id)
