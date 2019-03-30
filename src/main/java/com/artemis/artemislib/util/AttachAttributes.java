@@ -86,7 +86,7 @@ public class AttachAttributes
 
 					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
 					width = MathHelper.clamp(width, 0.15F, width);
-					height = MathHelper.clamp(height, 0.252F, height);
+					height = MathHelper.clamp(height, 0.25F, height);
 					player.eyeHeight = eyeHeight;
 					player.height = height;
 					player.width = width;
@@ -185,22 +185,27 @@ public class AttachAttributes
 		if(entity.hasCapability(SizeCapPro.sizeCapability, null))
 		{
 			final ISizeCap cap = entity.getCapability(SizeCapPro.sizeCapability, null);
-			float scaleHeight = entity.height / cap.getDefaultHeight();
-			float scaleWidth = entity.width / cap.getDefaultWidth();
-	
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
-			GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
-					event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
-	
-			if(entity instanceof EntityPlayer)
+			
+			if(cap.getTrans() == true)
 			{
-				final EntityPlayer player = (EntityPlayer) entity;
-				if(player.getRidingEntity() instanceof AbstractHorse)
-				{
-					//GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
-					//GlStateManager.translate(0, scaleHeight * 2, 0);
-				}
+				float scaleHeight = entity.height / cap.getDefaultHeight();
+				float scaleWidth = entity.width / cap.getDefaultWidth();
+				
+				GlStateManager.pushMatrix();
+				GlStateManager.scale(scaleWidth, scaleHeight, scaleWidth);
+				GlStateManager.translate(event.getX() / scaleWidth - event.getX(),
+						event.getY() / scaleHeight - event.getY(), event.getZ() / scaleWidth - event.getZ());
+			}
+		}
+
+		if(entity instanceof EntityPlayer)
+		{
+			final EntityPlayer player = (EntityPlayer) entity;
+			
+			if(player.getRidingEntity() instanceof AbstractHorse)
+			{
+				//GlStateManager.translate(0F, (1.7F-scaleHeight)*scaleHeight, 0F);
+				//GlStateManager.translate(0, scaleHeight * 2, 0);
 			}
 		}
 	}
