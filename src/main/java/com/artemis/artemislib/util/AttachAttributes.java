@@ -214,6 +214,16 @@ public class AttachAttributes
 	@SubscribeEvent
 	public void onLivingRenderPost(RenderLivingEvent.Post event)
 	{
-		GlStateManager.popMatrix();
+		final EntityLivingBase entity = event.getEntity();
+		
+		if(entity.hasCapability(SizeCapPro.sizeCapability, null))
+		{
+			final ISizeCap cap = entity.getCapability(SizeCapPro.sizeCapability, null);
+			
+			if(cap.getTrans() == true)
+			{
+				GlStateManager.popMatrix();
+			}
+		}
 	}
 }
