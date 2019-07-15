@@ -66,12 +66,12 @@ public class AttachAttributes
 					float eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute);
 					if (player.isSneaking())
 					{
-						height = height*MathHelper.ceil(0.9f);
-						eyeHeight = height*MathHelper.ceil(0.9f);
+						height *= 0.91666666666f;
+						eyeHeight *= 0.9382716f;
 					}
 					if (player.isElytraFlying())
 					{
-						height = height*0.33f;
+						height *= 0.33f;
 					}
 					if (player.isPlayerSleeping())
 					{
