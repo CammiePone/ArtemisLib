@@ -83,11 +83,11 @@ public class AttachAttributes
 						//eyeHeight = (float) (player.getDefaultEyeHeight() * heightAttribute)*1.4f;
 						//height = height*1.4f;
 					}
-
-					eyeHeight = MathHelper.clamp(eyeHeight, 0.22F, eyeHeight);
+					
 					width = MathHelper.clamp(width, 0.15F, width);
 					height = MathHelper.clamp(height, 0.25F, height);
-					player.eyeHeight = eyeHeight;
+					if(height >= 1.6F) player.eyeHeight = eyeHeight;
+					else player.eyeHeight = (eyeHeight * 0.9876542F);
 					player.height = height;
 					player.width = width;
 
