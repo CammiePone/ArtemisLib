@@ -44,11 +44,15 @@ repositories
         name = "ModMaven"
         url = "modmaven.k-4u.nl"
     }
+    maven
+    {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies
 {
-    
+    compileOnly('com.github.necauqua:chiseled-me:v1.12.2-2.0.0.1')
 }
 
 processResources
